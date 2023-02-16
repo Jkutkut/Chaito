@@ -1,5 +1,7 @@
 package org.chaito;
 
+import jkutkut.SuperScanner;
+
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -13,32 +15,33 @@ public class Client {
     private static DataInputStream input = null;
     private static DataOutputStream output = null;
 
+    private static final String DM_CMD = "dm";
+    private static final String CHAT_CMD = "chat";
+    private static final String EXIT_CMD = "chaito";
+
+    private static final String OPTIONS_MENU = "Options:\n" +
+            DM_CMD + ": Send a message to a user\n" +
+            CHAT_CMD + ": Send a message to all users\n" +
+            EXIT_CMD + ": Exit";
+    private static final  String[] CMDS = {DM_CMD, CHAT_CMD, EXIT_CMD};
+
     public static void main(String[] args) throws IOException {
         int port = 3232; // TODO get this from the user
         String host = "localhost"; // TODO get this from the user
         String user = "Maria"; // TODO get this from the user
 
         connect(user, host, port);
+        // TODO add listener in a new thread
+        //      Idea: detect the @user and alert the user
 
-        send("Holiiiiiiiiiiii");
-        send("Que tal?");
+        SuperScanner sc = new SuperScanner.En(System.in);
+        String op;
+        while (true) {
 
-//        InetAddress i = socket.getInetAddress();
-//
-//        //Puerto local de conexión del Socket
-//        System.out.println("Puerto Local: " +
-//                socket.getLocalPort());
-//        //Puerto de la máquina remota
-//        System.out.println("Puerto Remoto: " +
-//                socket.getPort());
-//        System.out.println("Nombre Host/IP: " +
-//                socket.getInetAddress());
-//        //Host de la máquina remota
-//        System.out.println("Host Remoto: " +
-//                i.getHostName().toString());
-//        //Diercción IP de la máquina remota a la que se conecta, en este caso el host local
-//        System.out.println("IP Host Remoto: " + i.getHostAddress().toString());
 
+        }
+
+        sc.close();
         close();
     }
 
