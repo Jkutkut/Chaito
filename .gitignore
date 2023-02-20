@@ -3,3 +3,4 @@ target/
 .idea/
 res/
 *.swp
+node_modules

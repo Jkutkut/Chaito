@@ -27,7 +27,7 @@ public class Server implements ServerAPI {
             System.err.println("Not able to create the server");
             return;
         }
-        System.out.println("Server started on port " + server.getLocalPort());
+        System.out.println("Server started on " + server.getLocalSocketAddress());
 
         while (running) { // TODO add a way to stop the server
             addClient(server.accept());
@@ -46,6 +46,7 @@ public class Server implements ServerAPI {
 
     private synchronized void addClient(Socket client) {
         try {
+            System.out.println("Connecting client...");
             ClientThread clientThread = new ClientThread(this, client);
             clients.add(clientThread);
             clientThread.start();
