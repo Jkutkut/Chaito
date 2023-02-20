@@ -8,7 +8,7 @@ import java.util.Base64;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class ClientThread extends Thread {
+public class ClientThread extends Thread implements ServerAPI {
 
     private final Socket socket;
     private final ServerAPI server;
@@ -31,9 +31,8 @@ public class ClientThread extends Thread {
         String msg;
         while (true) {
             try {
-                msg = input.readUTF();
-                System.out.println("Message: " + msg);
-                // TODO send the message to the server
+                msg = input.readUTF(); // TODO Use JSON
+                server.send(Server.ALL_TARGET, username, msg);
             }
             catch (IOException e) {
                 System.out.println("Client disconnected");
@@ -41,6 +40,14 @@ public class ClientThread extends Thread {
             }
         }
         close();
+    }
+
+    public synchronized void send(String target, String sender, String msg) {
+        try {
+            this.output.writeUTF(msg);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void close() {

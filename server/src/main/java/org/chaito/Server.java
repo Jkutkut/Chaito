@@ -39,9 +39,23 @@ public class Server implements ServerAPI {
         System.out.println("Server stopped");
     }
 
-    public synchronized void send(String target, String msg) {
-        // TODO
-        // TODO remove all the terminated threads
+    public synchronized void send(String target, String sender, String msg) {
+        System.out.println("Sending message to " + target + " from " + sender + ": " + msg);
+        if (target.equals(ALL_TARGET)) {
+            ClientThread c;
+            for (int i = 0; i < clients.size(); i++) {
+                c = clients.get(i);
+                if (!c.isAlive()) { // If thread has ended, remove it
+                    clients.remove(i--);
+                    // TODO this may need to be removed if we want chat history
+                    continue;
+                }
+                clients.get(i).send(target, sender, msg);
+            }
+        }
+        else {
+            System.out.println("Not implemented yet");
+        }
     }
 
     private synchronized void addClient(Socket client) {
@@ -51,7 +65,6 @@ public class Server implements ServerAPI {
             clients.add(clientThread);
             clientThread.start();
             System.out.println("Client connected: " + clientThread.getUsername());
-
         }
         catch (IOException e) {
             System.err.println("Not able to create the client thread");
