@@ -51,6 +51,19 @@ public class ClientThread extends Thread implements ServerAPI {
         }
     }
 
+    public synchronized void sendValidConnection(boolean valid) {
+        final String ERROR_USER_LOGGED = "ALREADY LOGGED";
+        final String OK = "OK";
+        try {
+            if (valid)
+                this.output.writeUTF(OK);
+            else
+                this.output.writeUTF(ERROR_USER_LOGGED);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void close() {
         try {
             if (input != null)

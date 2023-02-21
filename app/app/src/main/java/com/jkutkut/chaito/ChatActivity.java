@@ -11,6 +11,7 @@ import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.jkutkut.chaito.exception.InvalidDataException;
 import com.jkutkut.chaito.model.Msg;
 import com.jkutkut.chaito.rvUtil.MsgAdapter;
 import com.jkutkut.chaito.threads.ClientUI;
@@ -62,6 +63,10 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         server = null;
         try {
             server = new Server(this, user, host, port);
+        }
+        catch (InvalidDataException e) {
+            end(SERVER_REFUSED_CODE);
+            return;
         }
         catch (SecurityException | IOException e) {
             end(SERVER_REFUSED_CODE);

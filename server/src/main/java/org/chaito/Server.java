@@ -63,9 +63,25 @@ public class Server implements ServerAPI {
 
     private synchronized void addClient(Socket client) {
         try {
-            // TODO check if username is already taken
             System.out.println("Connecting client...");
             ClientThread clientThread = new ClientThread(this, client);
+
+            // Check if username is already taken
+            ClientThread c;
+            for (int i = 0; i < clients.size(); i++) {
+                c = clients.get(i);
+                if (!c.isAlive()) { // If thread has ended, remove it
+                    clients.remove(i--);
+                    continue;
+                }
+                if (c.getUsername().equals(clientThread.getUsername())) {
+                    System.out.println("Username already taken");
+                    clientThread.sendValidConnection(false);
+                    clientThread.close();
+                    return;
+                }
+            }
+            clientThread.sendValidConnection(true);
             clients.add(clientThread);
             clientThread.start();
             System.out.println("Client connected: " + clientThread.getUsername());

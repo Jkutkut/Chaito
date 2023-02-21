@@ -4,6 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.jkutkut.chaito.exception.InvalidDataException;
 import com.jkutkut.chaito.model.Msg;
 
 import java.io.DataInputStream;
@@ -13,6 +14,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Server extends Thread {
+    private static final String ERROR_USER_LOGGED = "ALREADY LOGGED";
+
     private boolean running;
 
     private final ClientUI ui;
@@ -37,6 +40,11 @@ public class Server extends Thread {
         out = new DataOutputStream(socket.getOutputStream());
         System.out.println("********* Connected to " + host + ":" + port + " *********");
         out.writeUTF(user);
+        String confirmation = in.readUTF();
+        System.out.println("****************** Confirmation: " + confirmation);
+        if (confirmation.equals(ERROR_USER_LOGGED))
+            throw new InvalidDataException(confirmation);
+        // else, ok
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -71,8 +79,9 @@ public class Server extends Thread {
     }
 
     public synchronized void close() {
-        ui.handleDisconnect();
+        if (!running) return;
         running = false;
+        ui.handleDisconnect();
         try {
             if (in != null) {
                 in.close();
