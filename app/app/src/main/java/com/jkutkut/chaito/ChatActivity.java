@@ -85,4 +85,10 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        server.close();
+    }
 }

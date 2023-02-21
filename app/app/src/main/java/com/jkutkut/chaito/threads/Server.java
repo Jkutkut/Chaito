@@ -13,13 +13,14 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Server extends Thread {
-    private final boolean running;
+    private boolean running;
 
     private final ClientUI ui;
     private final String user;
     private final String host;
     private final int port;
 
+    private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
 
@@ -31,8 +32,8 @@ public class Server extends Thread {
         this.running = true;
 
         try {
-            System.out.println("********* Connecting to " + host + ":" + port + " *********");
-            Socket socket = new Socket(host, port);
+            System.out.println("********* Connecting to " + this.host + ":" + this.port + " *********");
+            socket = new Socket(host, port);
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             System.out.println("********* Connected to " + host + ":" + port + " *********");
@@ -61,6 +62,8 @@ public class Server extends Thread {
                 e.printStackTrace();
             }
         }
+        this.close();
+        System.out.println("Connection closed");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -75,5 +78,25 @@ public class Server extends Thread {
     // GETTERS
     public String getUser() {
         return user;
+    }
+
+    public synchronized void close() {
+        running = false;
+        try {
+            if (in != null) {
+                in.close();
+                in = null;
+            }
+            if (out != null) {
+                out.close();
+                out = null;
+            }
+            if (socket != null) {
+                socket.close();
+                socket = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
