@@ -13,7 +13,7 @@ public class Server implements ServerAPI {
     private static final String SERVER_TARGET = "SERVER";
     public static final String ALL_TARGET = "ALL";
 
-    private boolean running;
+    private boolean running; // TODO needed?
     private final ArrayList<ClientThread> clients;
 
     public Server() {
