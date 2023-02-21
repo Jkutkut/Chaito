@@ -1,9 +1,11 @@
 package com.jkutkut.chaito;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ChatActivity extends AppCompatActivity implements ClientUI {
     public static final String USER_KEY = "user";
     public static final String HOST_KEY = "host";
@@ -68,7 +71,9 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         if (msg.isEmpty()) {
             return;
         }
-        server.send(msg);
+        // TODO change target
+        Msg msgObj = new Msg(Msg.ALL_TARGET, server.getUser(), msg);
+        server.send(msgObj);
     }
 
     public void handleReceive(Msg msg) {

@@ -1,8 +1,4 @@
-package com.jkutkut.chaito.model;
-
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
+package org.chaito.model;
 
 import java.util.Base64;
 
@@ -24,7 +20,6 @@ public class Msg {
         this.msg = msg;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public String encode() {
         Base64.Encoder encoder = Base64.getEncoder();
         String targetBase64 = encoder.encodeToString(target.getBytes());
@@ -34,7 +29,6 @@ public class Msg {
         return String.join(COMMUNICATION_SEPARATOR, targetBase64, senderBase64, msgBase64);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static Msg decode(String encoded) {
         Base64.Decoder decoder = Base64.getDecoder();
         String[] parts = encoded.split(COMMUNICATION_SEPARATOR);
@@ -62,5 +56,12 @@ public class Msg {
     public String getMsg() {
         return msg;
     }
-}
 
+    public static void main(String[] args) {
+        Msg msg = new Msg("Luis", "Manolo", "Hello World!");
+        String encoded = msg.encode();
+        System.out.println(encoded);
+        Msg decoded = msg.decode(encoded);
+        System.out.println(decoded.getTarget() + " " + decoded.getSender() + " " + decoded.getMsg());
+    }
+}

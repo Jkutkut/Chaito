@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.Base64;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.chaito.model.Msg;
 
 public class ClientThread extends Thread implements ServerAPI {
 
@@ -28,11 +29,13 @@ public class ClientThread extends Thread implements ServerAPI {
 
     @Override
     public void run() {
-        String msg;
+        String data;
+        Msg msg;
         while (true) {
             try {
-                msg = input.readUTF(); // TODO Use JSON
-                server.send(Server.ALL_TARGET, username, msg);
+                data = input.readUTF();
+                msg = Msg.decode(data);
+                server.send(msg);
             }
             catch (IOException e) {
                 System.out.println("Client disconnected");
@@ -42,9 +45,9 @@ public class ClientThread extends Thread implements ServerAPI {
         close();
     }
 
-    public synchronized void send(String target, String sender, String msg) {
+    public synchronized void send(Msg msg) {
         try {
-            this.output.writeUTF(msg);
+            this.output.writeUTF(msg.encode());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,7 @@
 package org.chaito;
 
+import org.chaito.model.Msg;
+
 public interface ServerAPI {
-    void send(String target, String sender, String message);
+    void send(Msg msg);
 }

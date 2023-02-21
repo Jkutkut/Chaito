@@ -1,5 +1,9 @@
 package com.jkutkut.chaito.threads;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.jkutkut.chaito.model.Msg;
 
 import java.io.DataInputStream;
@@ -9,12 +13,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Server extends Thread {
-    private boolean running;
+    private final boolean running;
 
-    private ClientUI ui;
-    private String user;
-    private String host;
-    private int port;
+    private final ClientUI ui;
+    private final String user;
+    private final String host;
+    private final int port;
 
     private DataInputStream in;
     private DataOutputStream out;
@@ -44,22 +48,32 @@ public class Server extends Thread {
         // TODO handle errors
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void run() {
+        String data;
+        Msg msg;
         while (running) {
             try {
-                String msg = in.readUTF();
-                this.ui.handleReceive(new Msg(Msg.ALL_TARGET, "??", msg));
+                data = in.readUTF();
+                msg = Msg.decode(data);
+                this.ui.handleReceive(msg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void send(String msg) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void send(Msg msg) {
         try {
-            out.writeUTF(msg);
+            out.writeUTF(msg.encode());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // GETTERS
+    public String getUser() {
+        return user;
     }
 }

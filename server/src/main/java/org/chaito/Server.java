@@ -1,5 +1,7 @@
 package org.chaito;
 
+import org.chaito.model.Msg;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -39,7 +41,11 @@ public class Server implements ServerAPI {
         System.out.println("Server stopped");
     }
 
-    public synchronized void send(String target, String sender, String msg) {
+    public synchronized void send(Msg msgObj) {
+        String target = msgObj.getTarget();
+        String sender = msgObj.getSender();
+        String msg = msgObj.getMsg();
+
         System.out.println("Sending message to " + target + " from " + sender + ": " + msg);
         if (target.equals(ALL_TARGET)) {
             ClientThread c;
@@ -50,7 +56,7 @@ public class Server implements ServerAPI {
                     // TODO this may need to be removed if we want chat history
                     continue;
                 }
-                clients.get(i).send(target, sender, msg);
+                clients.get(i).send(msgObj);
             }
         }
         else {
