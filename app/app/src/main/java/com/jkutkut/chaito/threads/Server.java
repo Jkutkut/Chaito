@@ -24,29 +24,19 @@ public class Server extends Thread {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public Server(ClientUI ui, String user, String host, int port) {
+    public Server(ClientUI ui, String user, String host, int port) throws SecurityException, IOException {
         this.ui = ui;
         this.user = user;
         this.host = host;
         this.port = port;
         this.running = true;
 
-        try {
-            System.out.println("********* Connecting to " + this.host + ":" + this.port + " *********");
-            socket = new Socket(host, port);
-            in = new DataInputStream(socket.getInputStream());
-            out = new DataOutputStream(socket.getOutputStream());
-            System.out.println("********* Connected to " + host + ":" + port + " *********");
-            out.writeUTF(user);
-
-        } catch (UnknownHostException | SecurityException e) {
-            e.printStackTrace();
-            System.out.println("********* Failed to connect to " + host + ":" + port + " *********");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("********* Failed to create streams *********");
-        }
-        // TODO handle errors
+        System.out.println("********* Connecting to " + this.host + ":" + this.port + " *********");
+        socket = new Socket(host, port);
+        in = new DataInputStream(socket.getInputStream());
+        out = new DataOutputStream(socket.getOutputStream());
+        System.out.println("********* Connected to " + host + ":" + port + " *********");
+        out.writeUTF(user);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -59,7 +49,7 @@ public class Server extends Thread {
                 msg = Msg.decode(data);
                 this.ui.handleReceive(msg);
             } catch (IOException e) {
-                e.printStackTrace();
+                break;
             }
         }
         this.close();
@@ -81,6 +71,7 @@ public class Server extends Thread {
     }
 
     public synchronized void close() {
+        ui.handleDisconnect();
         running = false;
         try {
             if (in != null) {

@@ -63,6 +63,7 @@ public class Server implements ServerAPI {
 
     private synchronized void addClient(Socket client) {
         try {
+            // TODO check if username is already taken
             System.out.println("Connecting client...");
             ClientThread clientThread = new ClientThread(this, client);
             clients.add(clientThread);

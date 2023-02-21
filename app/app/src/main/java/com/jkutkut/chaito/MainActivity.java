@@ -1,5 +1,7 @@
 package com.jkutkut.chaito;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,15 +10,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText etxtUsername;
     private EditText etxtHost;
     private EditText etxtPort;
-    private Button btnLogin;
 
     private static final String VALID_IP = "^(?:\\d{1,3}\\.){3}\\d{1,3}$";
+
+    private ActivityResultLauncher<Intent> chatActivityResultLauncher;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -27,13 +31,32 @@ public class MainActivity extends AppCompatActivity {
         etxtUsername = findViewById(R.id.etxtUsername);
         etxtHost = findViewById(R.id.etxtHost);
         etxtPort = findViewById(R.id.etxtPort);
-        btnLogin = findViewById(R.id.btnLogin);
+        Button btnLogin = findViewById(R.id.btnLogin);
 
-        etxtUsername.setText("Manolo");
+        etxtUsername.setText("Jkutkut");
         etxtHost.setText("10.34.177.197");
         etxtPort.setText("3232");
 
         btnLogin.setOnClickListener(v -> login());
+
+        chatActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                System.out.println("*********************** Result code: " + result.getResultCode());
+                switch (result.getResultCode()) {
+                    case ChatActivity.BACK_CODE:
+                        Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
+                        break;
+                    case ChatActivity.SERVER_REFUSED_CODE:
+                        etxtUsername.setError("This user is already logged in!");
+                        break;
+                    case ChatActivity.SERVER_CLOSED_CODE:
+                        Toast.makeText(this, "Server is not connecting!", Toast.LENGTH_SHORT).show();
+                        etxtHost.setError("Is the server running?");
+                        break;
+                }
+            }
+        );
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -67,6 +90,6 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra(ChatActivity.USER_KEY, user);
         i.putExtra(ChatActivity.HOST_KEY, host);
         i.putExtra(ChatActivity.PORT_KEY, Integer.parseInt(port));
-        startActivity(i);
+        chatActivityResultLauncher.launch(i);
     }
 }

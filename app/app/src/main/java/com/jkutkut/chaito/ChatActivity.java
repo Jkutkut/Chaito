@@ -29,6 +29,10 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     public static final String HOST_KEY = "host";
     public static final String PORT_KEY = "port";
 
+    public static final int BACK_CODE = 0;
+    public static final int SERVER_REFUSED_CODE = 1;
+    public static final int SERVER_CLOSED_CODE = 2;
+
     private Button btnSend;
     private EditText etxtMsg;
     private RecyclerView rvChat;
@@ -51,15 +55,18 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         String user = getIntent().getStringExtra(USER_KEY);
         String host = getIntent().getStringExtra(HOST_KEY);
         int port = getIntent().getIntExtra(PORT_KEY, -1);
-        if (user == null || host == null || port == -1) {
-            finish();
-            return;
-        }
 
         msgs = new ArrayList<>();
         rvChat.setAdapter(new MsgAdapter(msgs));
 
-        server = new Server(this, user, host, port);
+        server = null;
+        try {
+            server = new Server(this, user, host, port);
+        }
+        catch (SecurityException | IOException e) {
+            end(SERVER_REFUSED_CODE);
+            return;
+        }
         server.start();
 
         btnSend.setEnabled(true);
@@ -77,18 +84,33 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     }
 
     public void handleReceive(Msg msg) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                msgs.add(msg);
-                rvChat.getAdapter().notifyDataSetChanged();
-            }
+        runOnUiThread(() -> {
+            msgs.add(msg);
+            rvChat.getAdapter().notifyDataSetChanged();
         });
+    }
+
+    public void handleDisconnect() {
+        if (server == null) return;
+        end(SERVER_CLOSED_CODE);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        server.close();
+        end(BACK_CODE);
+    }
+
+    private void end(int resultCode) {
+        System.out.println("Ending with code " + resultCode);
+        if (server != null) {
+            synchronized (server) {
+                if (server == null) return;
+                server.close();
+                server = null;
+            }
+        }
+        setResult(resultCode);
+        finish(); // TODO should be done with back?
     }
 }
