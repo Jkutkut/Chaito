@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.jkutkut.chaito.model.Msg;
 import com.jkutkut.chaito.rvUtil.MsgAdapter;
+import com.jkutkut.chaito.threads.ClientUI;
 import com.jkutkut.chaito.threads.Server;
 
 import java.io.DataInputStream;
@@ -20,7 +21,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements ClientUI {
     public static final String USER_KEY = "user";
     public static final String HOST_KEY = "host";
     public static final String PORT_KEY = "port";
@@ -55,16 +56,11 @@ public class ChatActivity extends AppCompatActivity {
         msgs = new ArrayList<>();
         rvChat.setAdapter(new MsgAdapter(msgs));
 
-//        server = new Server(user, host, port);
-//        server.start();
+        server = new Server(this, user, host, port);
+        server.start();
 
         btnSend.setEnabled(true);
         btnSend.setOnClickListener(v -> this.handleSend());
-
-        handleReceive(new Msg(Msg.ALL_TARGET, "Server", "Welcome to Chaito!"));
-        handleReceive(new Msg(Msg.ALL_TARGET, "Server", "You are connected to " + host + ":" + port));
-        handleReceive(new Msg(Msg.ALL_TARGET, "Manolo", "hi"));
-        handleReceive(new Msg("Manolo", "María", "holi"));
     }
 
     private void handleSend() {
@@ -75,8 +71,13 @@ public class ChatActivity extends AppCompatActivity {
         server.send(msg);
     }
 
-    private void handleReceive(Msg msg) {
-        msgs.add(msg);
-        rvChat.getAdapter().notifyDataSetChanged();
+    public void handleReceive(Msg msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                msgs.add(msg);
+                rvChat.getAdapter().notifyDataSetChanged();
+            }
+        });
     }
 }

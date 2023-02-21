@@ -1,5 +1,7 @@
 package com.jkutkut.chaito.threads;
 
+import com.jkutkut.chaito.model.Msg;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.net.UnknownHostException;
 public class Server extends Thread {
     private boolean running;
 
+    private ClientUI ui;
     private String user;
     private String host;
     private int port;
@@ -16,7 +19,8 @@ public class Server extends Thread {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public Server(String user, String host, int port) {
+    public Server(ClientUI ui, String user, String host, int port) {
+        this.ui = ui;
         this.user = user;
         this.host = host;
         this.port = port;
@@ -37,13 +41,14 @@ public class Server extends Thread {
             e.printStackTrace();
             System.out.println("********* Failed to create streams *********");
         }
+        // TODO handle errors
     }
 
     public void run() {
         while (running) {
             try {
                 String msg = in.readUTF();
-                System.out.println(msg);
+                this.ui.handleReceive(new Msg(Msg.ALL_TARGET, "??", msg));
             } catch (IOException e) {
                 e.printStackTrace();
             }
