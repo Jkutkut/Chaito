@@ -25,7 +25,7 @@ public class ChaitoDB extends AccessDB {
 
     public int insert(Msg msg) {
         String query = "INSERT INTO MSGS (target_user, sender_user, msg) VALUES (?, ?, ?);";
-        return SQLiteQuery.execute(this, query, msg.getSender(), msg.getTarget(), msg.getMsg());
+        return SQLiteQuery.execute(this, query, msg.getTarget(), msg.getSender(), msg.getMsg());
     }
 
     private ArrayList<Msg> sqlite2msg(ArrayList<Object[]> data) {
