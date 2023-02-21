@@ -3,8 +3,11 @@ package com.jkutkut.chaito;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.jkutkut.chaito.threads.Server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,13 +23,14 @@ public class ChatActivity extends AppCompatActivity {
     private Button btnSend;
     private EditText etxtMsg;
 
-    private DataInputStream in;
-    private DataOutputStream out;
+    private Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         btnSend = findViewById(R.id.btnSend);
         etxtMsg = findViewById(R.id.etxtMsg);
@@ -39,31 +43,9 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        Thread p = new Thread(() -> {
-            try {
-                System.out.println("********* Connecting to " + host + ":" + port + " *********");
-                Socket socket = new Socket(host, port);
-                in = new DataInputStream(socket.getInputStream());
-                out = new DataOutputStream(socket.getOutputStream());
-                System.out.println("********* Connected to " + host + ":" + port + " *********");
-                out.writeUTF(user);
+        server = new Server(user, host, port);
+        server.start();
 
-            } catch (UnknownHostException | SecurityException e) {
-                e.printStackTrace();
-                System.out.println("********* Failed to connect to " + host + ":" + port + " *********");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("********* Failed to create streams *********");
-            }
-            // TODO handle errors
-        });
-        p.start();
-
-        try {
-            p.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         btnSend.setEnabled(true);
         btnSend.setOnClickListener(v -> this.handleSend());
 
@@ -74,19 +56,10 @@ public class ChatActivity extends AppCompatActivity {
         if (msg.isEmpty()) {
             return;
         }
-        Thread p = new Thread(() -> {
-            try {
-                out.writeUTF(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-                btnSend.setEnabled(false);
-            }
-        });
-        p.start();
-        try {
-            p.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        server.send(msg);
+    }
+
+    private void handleReceive(String target, String sender, String msg) {
+        // TODO
     }
 }

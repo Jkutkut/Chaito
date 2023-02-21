@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent i = new Intent(this, ChatActivity.class);
         i.putExtra(ChatActivity.USER_KEY, "Manolo");
-        i.putExtra(ChatActivity.HOST_KEY, "");
+        i.putExtra(ChatActivity.HOST_KEY, "10.34.177.197");
         i.putExtra(ChatActivity.PORT_KEY, 3232);
         // TODO get data from the UI
         startActivity(i);
