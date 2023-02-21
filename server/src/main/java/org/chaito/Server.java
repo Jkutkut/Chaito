@@ -1,5 +1,6 @@
 package org.chaito;
 
+import org.chaito.db.ChaitoDB;
 import org.chaito.model.Msg;
 
 import java.io.IOException;
@@ -13,11 +14,11 @@ public class Server implements ServerAPI {
     private static final String SERVER_TARGET = "SERVER";
     public static final String ALL_TARGET = "ALL";
 
-    private boolean running; // TODO needed?
     private final ArrayList<ClientThread> clients;
+    private final ChaitoDB db;
 
     public Server() {
-        running = true;
+        db = new ChaitoDB();
         clients = new ArrayList<>();
     }
 
@@ -31,20 +32,17 @@ public class Server implements ServerAPI {
         }
         System.out.println("Server started on " + server.getLocalSocketAddress());
 
-        while (running) { // TODO add a way to stop the server
+        while (true) {
             addClient(server.accept());
         }
-
-        // TODO stop all the threads
-
-        server.close();
-        System.out.println("Server stopped");
     }
 
     public synchronized void send(Msg msgObj) {
         String target = msgObj.getTarget();
         String sender = msgObj.getSender();
         String msg = msgObj.getMsg();
+
+        db.insert(msgObj);
 
         System.out.println("Sending message to " + target + " from " + sender + ": " + msg);
         if (target.equals(ALL_TARGET)) {
@@ -53,7 +51,6 @@ public class Server implements ServerAPI {
                 c = clients.get(i);
                 if (!c.isAlive()) { // If thread has ended, remove it
                     clients.remove(i--);
-                    // TODO this may need to be removed if we want chat history
                     continue;
                 }
                 clients.get(i).send(msgObj);
@@ -71,6 +68,10 @@ public class Server implements ServerAPI {
             clients.add(clientThread);
             clientThread.start();
             System.out.println("Client connected: " + clientThread.getUsername());
+            for (Msg msg : db.getMsgs(clientThread.getUsername())) {
+                clientThread.send(msg);
+            }
+
         }
         catch (IOException e) {
             System.err.println("Not able to create the client thread");
