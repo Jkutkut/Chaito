@@ -49,17 +49,14 @@
 
         <TextView
             android:id="@+id/txtvMsg"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/msg_margin"
             android:layout_marginEnd="@dimen/msg_padding"
             android:text="Quiere macarrones?"
             android:textSize="@dimen/msg_txt_size"
+            android:gravity="start"
             android:fontFamily="@font/quicksand"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtvUsername" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--  TODO datetime  -->
 </androidx.constraintlayout.widget.ConstraintLayout>
