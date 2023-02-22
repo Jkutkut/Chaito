@@ -85,18 +85,10 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.MsgViewHolder> {
                 ));
             }
             else { // Someone or me to someone
-                if (msg.getSender().equals(user)) {
-                    txtvMsgType.setText(String.format(
-                        context.getString(R.string.you_whisper),
-                        user
-                    ));
-                }
-                else {
-                    txtvMsgType.setText(String.format(
-                        context.getString(R.string.whispers),
-                        msg.getSender()
-                    ));
-                }
+                txtvMsgType.setText(String.format(
+                    context.getString(R.string.you_whisper),
+                    msg.getTarget()
+                ));
             }
             txtvMsg.setText(msg.getMsg());
         }
