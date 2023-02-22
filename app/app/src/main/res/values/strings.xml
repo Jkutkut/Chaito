@@ -10,4 +10,5 @@
     <string name="whisper">Whisper</string>
     <string name="chat_hint">Message</string>
     <string name="btn_send">Send</string>
+    <string name="fap_icon_description">Toggle between dark to light modes.</string>
 </resources>

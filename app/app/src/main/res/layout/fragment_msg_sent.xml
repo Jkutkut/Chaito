@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/purple_200"
+        android:background="@drawable/outgoing_msg"
         android:padding="@dimen/msg_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,6 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Manolo"
+            android:textSize="@dimen/msg_txt_size"
+            android:fontFamily="@font/quicksand_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,18 +28,25 @@
             android:id="@+id/txtvMsgType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/txtvUsername"
+            app:layout_constraintTop_toTopOf="@id/txtvUsername"
             android:layout_marginStart="@dimen/msg_margin_small"
             android:text="@string/whispers"
-            app:layout_constraintStart_toEndOf="@id/txtvUsername"
-            app:layout_constraintTop_toTopOf="@id/txtvUsername" />
+            android:textSize="@dimen/msg_txt_size"
+            android:textStyle="italic"
+            android:fontFamily="@font/quicksand_medium"/>
 
         <TextView
             android:id="@+id/txtvMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/msg_margin"
-            android:text="fjlaksdj flkajskldf jaskld jflkasjd lfkjadkls jfkla jl"
+            android:layout_marginEnd="@dimen/msg_padding"
+            android:text="Quiere macarrones?"
+            android:textSize="@dimen/msg_txt_size"
+            android:fontFamily="@font/quicksand"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtvUsername" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

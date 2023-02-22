@@ -6,11 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/msg_padding"
     android:layout_marginTop="@dimen/msg_margin"
-    android:background="@color/purple_200">
+    android:background="@drawable/incoming_msg">
     <TextView
         android:id="@+id/txtvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        mar
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Manolo"/>
