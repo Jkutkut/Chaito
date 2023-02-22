@@ -11,9 +11,13 @@
         android:id="@+id/txtvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/msg_padding"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Manolo"/>
+        android:text="Manolo"
+        android:textSize="17sp"
+        android:fontFamily="@font/quicksand_medium"/>
 
     <TextView
         android:id="@+id/txtvMsgType"
@@ -21,17 +25,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/msg_margin_small"
         android:text="@string/whispers"
+        android:textSize="17sp"
+        android:textStyle="italic"
+        android:fontFamily="@font/quicksand_medium"
         app:layout_constraintTop_toTopOf="@id/txtvUsername"
         app:layout_constraintStart_toEndOf="@id/txtvUsername"/>
 
     <TextView
         android:id="@+id/txtvMsg"
         android:layout_marginTop="@dimen/msg_margin"
+        android:layout_marginLeft="@dimen/msg_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="fjlaksdj flkajskldf jaskld jflkasjd lfkjadkls jfkla jl"
+        android:fontFamily="@font/quicksand"
         app:layout_constraintTop_toBottomOf="@id/txtvUsername"
         app:layout_constraintStart_toStartOf="parent"/>
-
-<!--  TODO datetime  -->
 </androidx.constraintlayout.widget.ConstraintLayout>
