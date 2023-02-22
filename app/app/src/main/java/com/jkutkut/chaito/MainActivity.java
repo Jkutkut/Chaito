@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.jkutkut.chaito.custom.CustomActivity;
+import com.jkutkut.chaito.custom.CustomButton;
+
+public class MainActivity extends CustomActivity {
 
     private EditText etxtUsername;
     private EditText etxtHost;
@@ -22,22 +26,23 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> chatActivityResultLauncher;
 
+    @SuppressLint("MissingSuperCall")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState, R.layout.activity_main);
 
         etxtUsername = findViewById(R.id.etxtUsername);
         etxtHost = findViewById(R.id.etxtHost);
         etxtPort = findViewById(R.id.etxtPort);
-        Button btnLogin = findViewById(R.id.btnLogin);
+        CustomButton btnLogin = findViewById(R.id.btnLogin);
 
         etxtUsername.setText("Jkutkut");
         etxtHost.setText("10.34.177.197");
         etxtPort.setText("3232");
 
         btnLogin.setOnClickListener(v -> login());
+        btnLogin.setClickFeedback(getColor(R.color.teal_700)); // TODO Change this color
 
         chatActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),

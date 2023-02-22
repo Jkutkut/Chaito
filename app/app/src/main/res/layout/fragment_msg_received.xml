@@ -11,7 +11,6 @@
         android:id="@+id/txtvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        mar
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Manolo"/>
