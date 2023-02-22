@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Chaito</string>
+
+    <string name="says">says:</string>
+    <string name="whispers">whispers to %1$s:</string>
+    <string name="you_say">say:</string>
+    <string name="you_whisper">whisper to %1$s:</string>
+    <string name="you">You</string>
+</resources>

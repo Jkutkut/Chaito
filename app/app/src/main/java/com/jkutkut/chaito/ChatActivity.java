@@ -58,7 +58,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         int port = getIntent().getIntExtra(PORT_KEY, -1);
 
         msgs = new ArrayList<>();
-        rvChat.setAdapter(new MsgAdapter(msgs));
+        rvChat.setAdapter(new MsgAdapter(user, msgs));
 
         server = null;
         try {
@@ -84,6 +84,8 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
             return;
         }
         // TODO change target
+        // TODO remove msg once sent
+        // TODO first char as mayus
         Msg msgObj = new Msg(Msg.ALL_TARGET, server.getUser(), msg);
         server.send(msgObj);
     }

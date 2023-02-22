@@ -15,28 +15,44 @@ import com.jkutkut.chaito.model.Msg;
 import java.util.ArrayList;
 
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.MsgViewHolder> {
-    private final ArrayList<Msg> msgs;
+    private static final int RECEIVED_MSG = 0;
+    private static final int SENT_MSG = 1;
 
-    public MsgAdapter(ArrayList<Msg> msgs) {
+    private final ArrayList<Msg> msgs;
+    private final String user;
+
+    public MsgAdapter(String user, ArrayList<Msg> msgs) {
+        this.user = user;
         this.msgs = msgs;
     }
 
     @NonNull
     @Override
     public MsgViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_msg, parent, false);
+        int layoutId = viewType == SENT_MSG ? R.layout.fragment_msg_sent : R.layout.fragment_msg_received;
+        View v = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
         return new MsgViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MsgViewHolder holder, int position) {
         Msg msg = msgs.get(position);
-        holder.bind(msg, holder.itemView.getContext());
+        holder.bind(user, msg, holder.itemView.getContext());
     }
 
     @Override
     public int getItemCount() {
         return msgs.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Msg msg = msgs.get(position);
+        if (msg.getSender().equals(user)) {
+            return SENT_MSG;
+        } else {
+            return RECEIVED_MSG;
+        }
     }
 
     public static class MsgViewHolder extends RecyclerView.ViewHolder {
@@ -51,12 +67,36 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.MsgViewHolder> {
             txtvMsg = itemView.findViewById(R.id.txtvMsg);
         }
 
-        public void bind(Msg msg, Context context) {
+        public void bind(String user, Msg msg, Context context) {
             txtvUsername.setText(msg.getSender());
-            if (msg.getTarget().equals(Msg.ALL_TARGET)) {
+            if (msg.getSender().equals(user)) {
+                txtvUsername.setText(context.getString(R.string.you));
+            }
+
+            if (msg.getTarget().equals(Msg.ALL_TARGET)) { // Someone says to all
                 txtvMsgType.setText(context.getString(R.string.says));
-            } else {
-                txtvMsgType.setText(context.getString(R.string.whispers));
+                if (msg.getSender().equals(user))
+                    txtvMsgType.setText(context.getString(R.string.you_say));
+            }
+            else if (msg.getTarget().equals(user)) { // Someone to me
+                txtvMsgType.setText(String.format(
+                    context.getString(R.string.whispers),
+                    context.getString(R.string.you).toLowerCase()
+                ));
+            }
+            else { // Someone or me to someone
+                if (msg.getSender().equals(user)) {
+                    txtvMsgType.setText(String.format(
+                        context.getString(R.string.you_whisper),
+                        user
+                    ));
+                }
+                else {
+                    txtvMsgType.setText(String.format(
+                        context.getString(R.string.whispers),
+                        msg.getSender()
+                    ));
+                }
             }
             txtvMsg.setText(msg.getMsg());
         }
