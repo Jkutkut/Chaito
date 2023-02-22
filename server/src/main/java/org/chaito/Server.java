@@ -57,7 +57,18 @@ public class Server implements ServerAPI {
             }
         }
         else {
-            System.out.println("Not implemented yet");
+            ClientThread c;
+            for (int i = 0, j = 0; i < clients.size() && j < 2; i++) {
+                c = clients.get(i);
+                if (!c.isAlive()) { // If thread has ended, remove it
+                    clients.remove(i--);
+                    continue;
+                }
+                if (c.getUsername().equals(target) || c.getUsername().equals(sender)) {
+                    c.send(msgObj);
+                    j++;
+                }
+            }
         }
     }
 
