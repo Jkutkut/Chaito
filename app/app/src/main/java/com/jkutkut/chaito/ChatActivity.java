@@ -84,10 +84,10 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
             return;
         }
         // TODO change target
-        // TODO remove msg once sent
-        // TODO first char as mayus
+        msg = msg.substring(0, 1).toUpperCase() + msg.substring(1);
         Msg msgObj = new Msg(Msg.ALL_TARGET, server.getUser(), msg);
         server.send(msgObj);
+        etxtMsg.setText("");
     }
 
     public void handleReceive(Msg msg) {
