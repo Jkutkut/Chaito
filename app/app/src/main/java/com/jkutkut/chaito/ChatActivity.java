@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
+import com.jkutkut.chaito.custom.CustomButton;
 import com.jkutkut.chaito.exception.InvalidDataException;
 import com.jkutkut.chaito.model.Msg;
 import com.jkutkut.chaito.rvUtil.MsgAdapter;
@@ -38,7 +40,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     private RadioGroup msgType;
     private EditText etxtWhisperTo;
 
-    private Button btnSend;
+    private ImageButton btnSend;
     private EditText etxtMsg;
     private RecyclerView rvChat;
 

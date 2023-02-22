@@ -15,12 +15,13 @@ import android.widget.Toast;
 
 import com.jkutkut.chaito.custom.CustomActivity;
 import com.jkutkut.chaito.custom.CustomButton;
+import com.jkutkut.chaito.custom.CustomEditText;
 
 public class MainActivity extends CustomActivity {
 
-    private EditText etxtUsername;
-    private EditText etxtHost;
-    private EditText etxtPort;
+    private CustomEditText etxtUsername;
+    private CustomEditText etxtHost;
+    private CustomEditText etxtPort;
 
     private static final String VALID_IP = "^(?:\\d{1,3}\\.){3}\\d{1,3}$";
 
@@ -38,8 +39,11 @@ public class MainActivity extends CustomActivity {
         CustomButton btnLogin = findViewById(R.id.btnLogin);
 
         etxtUsername.setText("Jkutkut");
+        etxtUsername.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
         etxtHost.setText("10.34.177.197");
+        etxtHost.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
         etxtPort.setText("3232");
+        etxtPort.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
 
         btnLogin.setOnClickListener(v -> login());
         btnLogin.setClickFeedback(getColor(R.color.teal_700)); // TODO Change this color

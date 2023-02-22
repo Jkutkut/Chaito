@@ -5,6 +5,12 @@ import android.graphics.PorterDuff;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Logic to add animations to different views.
@@ -15,7 +21,7 @@ public class CustomAnimations {
      * @param btn The button to change its background color.
      * @param color The color to change the background to.
      */
-    public static void setBtnClickFeedback(Button btn, int color) {
+    public static void setBtnClickFeedback(@NotNull Button btn, @ColorInt int color) {
         setBtnClickFeedback(btn, btn, color);
     }
 
@@ -26,7 +32,7 @@ public class CustomAnimations {
      * @param color The color to change the background to.
      */
     @SuppressLint("ClickableViewAccessibility")
-    public static void setBtnClickFeedback(Button btn, View view, int color) {
+    public static void setBtnClickFeedback(@NotNull Button btn, @NotNull View view, @ColorInt int color) {
         view.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
@@ -41,6 +47,18 @@ public class CustomAnimations {
                 }
             }
             return false;
+        });
+    }
+
+    public static void setEditTextFeedback(@NotNull EditText etxt, @ColorInt int color, @ColorInt int colorFocus) {
+        etxt.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                etxt.getBackground().setColorFilter(colorFocus, PorterDuff.Mode.SRC_ATOP);
+                etxt.invalidate(); // TODO test if this is needed
+            } else {
+                etxt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                etxt.invalidate();
+            }
         });
     }
 }

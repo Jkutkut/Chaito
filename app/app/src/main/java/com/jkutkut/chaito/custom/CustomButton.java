@@ -3,6 +3,7 @@ package com.jkutkut.chaito.custom;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -27,7 +28,7 @@ public class CustomButton extends AppCompatButton {
      * Set's an animation to the button's background using ${@link CustomAnimations}.
      * @param color The color to animate to.
      */
-    public void setClickFeedback(int color) {
+    public void setClickFeedback(@ColorInt int color) {
         CustomAnimations.setBtnClickFeedback(this, color);
     }
 }
