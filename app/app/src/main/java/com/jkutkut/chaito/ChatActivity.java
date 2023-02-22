@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.jkutkut.chaito.exception.InvalidDataException;
 import com.jkutkut.chaito.model.Msg;
@@ -34,6 +35,9 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     public static final int SERVER_REFUSED_CODE = 1;
     public static final int SERVER_CLOSED_CODE = 2;
 
+    private RadioGroup msgType;
+    private EditText etxtWhisperTo;
+
     private Button btnSend;
     private EditText etxtMsg;
     private RecyclerView rvChat;
@@ -48,6 +52,8 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        msgType = findViewById(R.id.msgType);
+        etxtWhisperTo = findViewById(R.id.etxtWhisperTo);
         btnSend = findViewById(R.id.btnSend);
         etxtMsg = findViewById(R.id.etxtMsg);
         rvChat = findViewById(R.id.rvChat);
@@ -64,11 +70,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         try {
             server = new Server(this, user, host, port);
         }
-        catch (InvalidDataException e) {
-            end(SERVER_REFUSED_CODE);
-            return;
-        }
-        catch (SecurityException | IOException e) {
+        catch (InvalidDataException | SecurityException | IOException e) {
             end(SERVER_REFUSED_CODE);
             return;
         }
@@ -79,13 +81,25 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     }
 
     private void handleSend() {
+        String target;
+        if (msgType.getCheckedRadioButtonId() == R.id.rbtnBroadcast) {
+            target = Msg.ALL_TARGET;
+        }
+        else { // R.id.rbtnWhisper:
+            target = etxtWhisperTo.getText().toString().trim();
+            if (target.isEmpty()) {
+                etxtWhisperTo.setError("Whisper target cannot be empty");
+                return;
+            }
+        }
+
         String msg = etxtMsg.getText().toString().trim();
         if (msg.isEmpty()) {
+            etxtMsg.setError("Message cannot be empty");
             return;
         }
-        // TODO change target
         msg = msg.substring(0, 1).toUpperCase() + msg.substring(1);
-        Msg msgObj = new Msg(Msg.ALL_TARGET, server.getUser(), msg);
+        Msg msgObj = new Msg(target, server.getUser(), msg);
         server.send(msgObj);
         etxtMsg.setText("");
     }

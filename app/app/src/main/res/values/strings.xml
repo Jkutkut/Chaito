@@ -6,4 +6,8 @@
     <string name="you_say">say:</string>
     <string name="you_whisper">whisper to %1$s:</string>
     <string name="you">You</string>
+    <string name="broadcast">Broadcast</string>
+    <string name="whisper">Whisper</string>
+    <string name="chat_hint">Message</string>
+    <string name="btn_send">Send</string>
 </resources>
