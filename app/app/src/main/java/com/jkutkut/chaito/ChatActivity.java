@@ -38,6 +38,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     public static final int SERVER_REFUSED_CODE = 1;
     public static final int SERVER_CLOSED_CODE = 2;
 
+    private ImageButton btnBack;
     private RadioGroup msgType;
     private EditText etxtWhisperTo;
 
@@ -55,6 +56,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        btnBack = findViewById(R.id.ibtnBack);
         msgType = findViewById(R.id.msgType);
         etxtWhisperTo = findViewById(R.id.etxtWhisperTo);
         btnSend = findViewById(R.id.btnSend);
@@ -79,6 +81,8 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
             return;
         }
         server.start();
+
+        btnBack.setOnClickListener(v -> onBackPressed());
 
         btnSend.setEnabled(true);
         btnSend.setOnClickListener(v -> this.handleSend());
