@@ -1,6 +1,5 @@
 package org.chaito.db;
 
-import org.chaito.Server;
 import org.chaito.model.Msg;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class ChaitoDB extends AccessDB {
 
     public int insert(Msg msg) {
         String query = "INSERT INTO MSGS (target_user, sender_user, msg) VALUES (?, ?, ?);";
-        return SQLiteQuery.execute(this, query, msg.getTarget(), msg.getSender(), msg.getMsg());
+        return SQLiteQuery.execute(this, query, msg.target(), msg.sender(), msg.msg());
     }
 
     private ArrayList<Msg> sqlite2msg(ArrayList<Object[]> data) {

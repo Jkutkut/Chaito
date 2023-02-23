@@ -2,20 +2,10 @@ package org.chaito.model;
 
 import java.util.Base64;
 
-public class Msg {
+public record Msg(String target, String sender, String msg) {
     private static final String COMMUNICATION_SEPARATOR = ",";
 
     public static final String ALL_TARGET = "ALL";
-
-    private final String target;
-    private final String sender;
-    private final String msg;
-
-    public Msg(String target, String sender, String msg) {
-        this.target = target;
-        this.sender = sender;
-        this.msg = msg;
-    }
 
     public String encode() {
         Base64.Encoder encoder = Base64.getEncoder();
@@ -38,27 +28,5 @@ public class Msg {
         String msg = new String(decoder.decode(msgBase64));
 
         return new Msg(target, sender, msg);
-    }
-
-    // GETTERS
-
-    public String getTarget() {
-        return target;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public static void main(String[] args) {
-        Msg msg = new Msg("Luis", "Manolo", "Hello World!");
-        String encoded = msg.encode();
-        System.out.println(encoded);
-        Msg decoded = decode(encoded);
-        System.out.println(decoded.getTarget() + " " + decoded.getSender() + " " + decoded.getMsg());
     }
 }

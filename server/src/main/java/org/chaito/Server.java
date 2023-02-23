@@ -35,9 +35,9 @@ public class Server implements ServerAPI {
     }
 
     public synchronized void send(Msg msgObj) {
-        String target = msgObj.getTarget();
-        String sender = msgObj.getSender();
-        String msg = msgObj.getMsg();
+        String target = msgObj.target();
+        String sender = msgObj.sender();
+        String msg = msgObj.msg();
 
         db.insert(msgObj);
 
