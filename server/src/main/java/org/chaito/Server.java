@@ -96,6 +96,7 @@ public class Server implements ServerAPI {
             clients.add(clientThread);
             clientThread.start();
             System.out.println("Client connected: " + clientThread.getUsername());
+            System.out.println("Total clients: " + clients.size());
             for (Msg msg : db.getMsgs(clientThread.getUsername())) {
                 clientThread.send(msg);
             }
