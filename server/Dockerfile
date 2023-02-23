@@ -4,8 +4,11 @@ FROM amazoncorretto:18.0.2-alpine3.16
 WORKDIR /app
 
 # Copy the jar files
-COPY ./chaito_server.jar /jars/
+COPY ./jars/ /jars
+
+# Copy DB
+COPY db.properties /app/
 
 # Define the entrypoint
-ENTRYPOINT ["java", "-cp", "/jars/chaito_server.jar", "org.chaito.Server"]
+ENTRYPOINT ["java", "-cp", "/jars/chaito_server.jar:/jars/sqlite-jdbc.jar", "org.chaito.Server", "3232"]
 
