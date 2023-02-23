@@ -97,6 +97,9 @@ public class MainActivity extends CustomActivity {
             return;
         }
 
+        etxtUsername.setError(null);
+        etxtHost.setError(null);
+        etxtPort.setError(null);
         Intent i = new Intent(this, ChatActivity.class);
         i.putExtra(ChatActivity.USER_KEY, user);
         i.putExtra(ChatActivity.HOST_KEY, host);

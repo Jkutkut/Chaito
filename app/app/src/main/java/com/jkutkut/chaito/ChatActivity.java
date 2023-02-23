@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
-import com.jkutkut.chaito.custom.CustomButton;
 import com.jkutkut.chaito.custom.CustomEditText;
 import com.jkutkut.chaito.exception.InvalidDataException;
 import com.jkutkut.chaito.model.Msg;
@@ -21,12 +19,9 @@ import com.jkutkut.chaito.rvUtil.MsgAdapter;
 import com.jkutkut.chaito.threads.ClientUI;
 import com.jkutkut.chaito.threads.Server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ChatActivity extends AppCompatActivity implements ClientUI {
@@ -38,11 +33,9 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     public static final int SERVER_REFUSED_CODE = 1;
     public static final int SERVER_CLOSED_CODE = 2;
 
-    private ImageButton btnBack;
     private RadioGroup msgType;
     private EditText etxtWhisperTo;
 
-    private ImageButton btnSend;
     private CustomEditText etxtMsg;
     private RecyclerView rvChat;
 
@@ -56,10 +49,10 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        btnBack = findViewById(R.id.ibtnBack);
+        ImageButton btnBack = findViewById(R.id.ibtnBack);
         msgType = findViewById(R.id.msgType);
         etxtWhisperTo = findViewById(R.id.etxtWhisperTo);
-        btnSend = findViewById(R.id.btnSend);
+        ImageButton btnSend = findViewById(R.id.btnSend);
         etxtMsg = findViewById(R.id.etxtMsg);
         etxtMsg.setClickFeedback(getColor(R.color.etxt_color), getColor(R.color.etxt_hightlight));
         rvChat = findViewById(R.id.rvChat);
@@ -76,8 +69,12 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         try {
             server = new Server(this, user, host, port);
         }
-        catch (InvalidDataException | SecurityException | IOException e) {
+        catch (InvalidDataException e) {
             end(SERVER_REFUSED_CODE);
+            return;
+        }
+        catch (SecurityException | IOException e) {
+            end(SERVER_CLOSED_CODE);
             return;
         }
         server.start();
@@ -101,7 +98,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
             }
         }
 
-        String msg = etxtMsg.getText().toString().trim();
+        String msg = Objects.requireNonNull(etxtMsg.getText()).toString().trim();
         if (msg.isEmpty()) {
             etxtMsg.setError("Message cannot be empty");
             return;
