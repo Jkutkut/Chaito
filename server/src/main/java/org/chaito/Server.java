@@ -7,14 +7,15 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Server implements ServerAPI {
-    private static final int PORT = 3232;
-
     private final ArrayList<ClientThread> clients;
     private final ChaitoDB db;
+    private final int port;
 
-    public Server() {
+    public Server(int port) {
+        this.port = port;
         db = new ChaitoDB();
         clients = new ArrayList<>();
     }
@@ -22,12 +23,14 @@ public class Server implements ServerAPI {
     public void run() throws IOException {
         ServerSocket server;
         try {
-            server = new ServerSocket(PORT);
+            server = new ServerSocket(port);
         } catch (IOException e) {
             System.err.println("Not able to create the server");
+            e.printStackTrace();
             return;
         }
         System.out.println("Server started on " + server.getLocalSocketAddress());
+        System.out.println("Ctrl+C to stop the server");
 
         while (true) {
             addClient(server.accept());
@@ -104,6 +107,18 @@ public class Server implements ServerAPI {
     }
 
     public static void main(String[] args) throws IOException {
-        new Server().run();
+        if (args.length != 1) {
+            System.err.println("Specify the port!");
+            return;
+        }
+        int port;
+        try {
+            port = Integer.parseInt(args[0]);
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Port must be an integer!");
+            return;
+        }
+        new Server(port).run();
     }
 }
