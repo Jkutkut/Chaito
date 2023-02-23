@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class Server implements ServerAPI {
     private static final int PORT = 3232;
 
-    public static final String ALL_TARGET = "ALL";
-
     private final ArrayList<ClientThread> clients;
     private final ChaitoDB db;
 
@@ -44,7 +42,7 @@ public class Server implements ServerAPI {
         db.insert(msgObj);
 
         System.out.println("Sending message to " + target + " from " + sender + ": " + msg);
-        if (target.equals(ALL_TARGET)) {
+        if (target.equals(Msg.ALL_TARGET)) {
             ClientThread c;
             for (int i = 0; i < clients.size(); i++) {
                 c = clients.get(i);

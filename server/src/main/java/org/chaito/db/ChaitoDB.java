@@ -1,6 +1,5 @@
 package org.chaito.db;
 
-import org.chaito.ClientThread;
 import org.chaito.Server;
 import org.chaito.model.Msg;
 
@@ -19,7 +18,7 @@ public class ChaitoDB extends AccessDB {
     }
 
     public ArrayList<Msg> getMsgs(String target) {
-        String query = "SELECT * FROM MSGS WHERE target_user = ? or target_user = '" + Server.ALL_TARGET + "' or sender_user = ?;";
+        String query = "SELECT * FROM MSGS WHERE target_user = ? or target_user = '" + Msg.ALL_TARGET + "' or sender_user = ?;";
         return sqlite2msg(SQLiteQuery.get(this, 4, query, target, target));
     }
 

@@ -3,11 +3,8 @@ package org.chaito.model;
 import java.util.Base64;
 
 public class Msg {
-    public static final long serialVersionUID = 1L;
-
     private static final String COMMUNICATION_SEPARATOR = ",";
 
-    private static final String SERVER_TARGET = "SERVER";
     public static final String ALL_TARGET = "ALL";
 
     private final String target;
@@ -43,7 +40,7 @@ public class Msg {
         return new Msg(target, sender, msg);
     }
 
-    // GETTTERS
+    // GETTERS
 
     public String getTarget() {
         return target;
@@ -61,7 +58,7 @@ public class Msg {
         Msg msg = new Msg("Luis", "Manolo", "Hello World!");
         String encoded = msg.encode();
         System.out.println(encoded);
-        Msg decoded = msg.decode(encoded);
+        Msg decoded = decode(encoded);
         System.out.println(decoded.getTarget() + " " + decoded.getSender() + " " + decoded.getMsg());
     }
 }

@@ -22,14 +22,14 @@ public class InvalidDataException extends RuntimeException {
     }
 
     private static String addArrayToStr(String s, Object[] arr) {
-        String arrStr = "{";
+        StringBuilder arrStr = new StringBuilder("{");
         if (arr != null && arr.length > 0) {
-            arrStr += " " + arr[0];
+            arrStr.append(" ").append(arr[0]);
             for (int i = 1; i < arr.length; i++) {
-                arrStr += ", " + arr[i];
+                arrStr.append(", ").append(arr[i]);
             }
         }
-        arrStr += "}";
+        arrStr.append("}");
 
         return String.format(s, arrStr);
     }

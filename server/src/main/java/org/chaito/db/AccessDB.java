@@ -39,7 +39,6 @@ public class AccessDB {
             String[] paths = properties.getProperty("PATHS").split(":");
             this.url = null;
 
-            Path path;
             for (String p : paths) {
                 if (fileExist(p + properties.getProperty("DB_NAME"))) {
                     this.url = properties.getProperty("URL_TYPE") + p + properties.getProperty("DB_NAME");

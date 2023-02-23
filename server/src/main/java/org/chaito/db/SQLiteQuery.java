@@ -21,7 +21,7 @@ public class SQLiteQuery {
      * @param query String SQL con la sentencia SELECT a realizar.
      * @param input Conjunto de valores a sustituir en la query (las ?).
      * @return Arraylist con filas en forma de Array[Object] con el resultado.
-     * @throws SQLiteQueryException
+     * @throws SQLiteQueryException Si hay algún error en la base de datos.
      */
     public static ArrayList<Object[]> getFromDB(AccessDB db, int outputLength, String query, Object[] input) throws SQLiteQueryException {
         ArrayList<Object[]> output = new ArrayList<>();
@@ -73,7 +73,7 @@ public class SQLiteQuery {
      * @param query String SQL con la sentencia SELECT a realizar.
      * @param input Conjunto de valores a sustituir en la query (las ?).
      * @return Arraylist con filas en forma de Array[Object] con el resultado.
-     * @throws SQLiteQueryException
+     * @throws SQLiteQueryException Si hay algún error en la base de datos.
      */
     public static ArrayList<Object[]> get(AccessDB db, int outputLength, String query, Object... input) throws SQLiteQueryException {
         return getFromDB(db, outputLength, query, input);
@@ -85,7 +85,7 @@ public class SQLiteQuery {
      * @param query Query deseada
      * @param input Conjunto de valores a sustituir en la query (las ?)
      * @return Código de resultado dado por la base de datos.
-     * @throws SQLiteQueryException
+     * @throws SQLiteQueryException Si hay algún error en la base de datos.
      */
     public static int execute(AccessDB db, String query, Object... input) throws SQLiteQueryException {
         int result;
