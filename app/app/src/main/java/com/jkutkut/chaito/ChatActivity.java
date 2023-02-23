@@ -112,7 +112,8 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     public void handleReceive(Msg msg) {
         runOnUiThread(() -> {
             msgs.add(msg);
-            rvChat.getAdapter().notifyDataSetChanged();
+            Objects.requireNonNull(rvChat.getAdapter()).notifyItemInserted(msgs.size() - 1);
+            rvChat.smoothScrollToPosition(msgs.size() - 1);
         });
     }
 
