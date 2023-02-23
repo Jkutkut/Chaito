@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Server implements ServerAPI {
     private static final int PORT = 3232;
 
-    private static final String SERVER_TARGET = "SERVER";
     public static final String ALL_TARGET = "ALL";
 
     private final ArrayList<ClientThread> clients;

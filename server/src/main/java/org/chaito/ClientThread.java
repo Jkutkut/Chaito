@@ -22,7 +22,6 @@ public class ClientThread extends Thread implements ServerAPI {
         this.input = new DataInputStream(socket.getInputStream());
         this.output = new DataOutputStream(socket.getOutputStream());
         this.username = input.readUTF();
-        // TODO be able to stop the thread from the server
     }
 
     @Override

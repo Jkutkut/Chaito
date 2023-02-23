@@ -52,13 +52,10 @@ public class CustomAnimations {
 
     public static void setEditTextFeedback(@NotNull EditText etxt, @ColorInt int color, @ColorInt int colorFocus) {
         etxt.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                etxt.getBackground().setColorFilter(colorFocus, PorterDuff.Mode.SRC_ATOP);
-                etxt.invalidate(); // TODO test if this is needed
-            } else {
-                etxt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-                etxt.invalidate();
-            }
+            etxt.getBackground().setColorFilter(
+                (hasFocus)? colorFocus : color,
+                PorterDuff.Mode.SRC_ATOP
+            );
         });
     }
 }

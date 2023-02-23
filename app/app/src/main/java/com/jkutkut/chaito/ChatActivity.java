@@ -140,6 +140,6 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
             }
         }
         setResult(resultCode);
-        finish(); // TODO should be done with back?
+        finish();
     }
 }
