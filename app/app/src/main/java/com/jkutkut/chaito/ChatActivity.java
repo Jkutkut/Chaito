@@ -61,7 +61,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         etxtWhisperTo = findViewById(R.id.etxtWhisperTo);
         btnSend = findViewById(R.id.btnSend);
         etxtMsg = findViewById(R.id.etxtMsg);
-        etxtMsg.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
+        etxtMsg.setClickFeedback(getColor(R.color.etxt_color), getColor(R.color.etxt_hightlight));
         rvChat = findViewById(R.id.rvChat);
         rvChat.setLayoutManager(new LinearLayoutManager(this));
 

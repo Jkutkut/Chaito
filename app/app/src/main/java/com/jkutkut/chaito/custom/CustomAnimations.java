@@ -57,5 +57,6 @@ public class CustomAnimations {
                 PorterDuff.Mode.SRC_ATOP
             );
         });
+        etxt.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 }

@@ -7,4 +7,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
+    <color name="etxt_color">#808080</color>
+    <color name="etxt_hightlight">#A1A1A1</color>
+    <color name="btn_pressed">#0094D3</color>
 </resources>
