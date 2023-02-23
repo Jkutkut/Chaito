@@ -17,4 +17,7 @@
     <string name="hostname_text">Hostname</string>
     <string name="port_text">Port</string>
     <string name="login_text">Login</string>
+    <string name="msg_hint">Type a message</string>
+    <string name="send_button_description">send button description</string>
+    <string name="back_button_description">Back button</string>
 </resources>

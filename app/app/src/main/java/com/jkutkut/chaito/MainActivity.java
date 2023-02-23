@@ -41,6 +41,7 @@ public class MainActivity extends CustomActivity {
         etxtUsername.setText("Jkutkut");
         etxtUsername.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
         etxtHost.setText("10.34.177.197");
+        etxtHost.setText("192.168.1.170");
         etxtHost.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
         etxtPort.setText("3232");
         etxtPort.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color

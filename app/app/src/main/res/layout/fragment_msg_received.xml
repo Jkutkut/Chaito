@@ -23,7 +23,7 @@
         android:id="@+id/txtvMsgType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/msg_margin_small"
+        android:layout_marginLeft="@dimen/msg_margin_really_small"
         android:text="@string/whispers"
         android:textSize="@dimen/msg_txt_size"
         android:textStyle="italic"

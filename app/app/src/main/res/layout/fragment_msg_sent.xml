@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Manolo"
             android:textSize="@dimen/msg_txt_size"
-            android:gravity="right"
+            android:gravity="end"
             android:fontFamily="@font/quicksand_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
             android:layout_marginEnd="17dp"
             app:layout_constraintStart_toEndOf="@id/txtvUsername"
             app:layout_constraintTop_toTopOf="@id/txtvUsername"
-            android:layout_marginStart="@dimen/msg_margin_small"
+            android:layout_marginStart="@dimen/msg_margin_really_small"
             android:text="@string/whispers"
             android:gravity="start"
             android:textSize="@dimen/msg_txt_size"

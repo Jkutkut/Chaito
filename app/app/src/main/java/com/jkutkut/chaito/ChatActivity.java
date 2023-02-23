@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
 import com.jkutkut.chaito.custom.CustomButton;
+import com.jkutkut.chaito.custom.CustomEditText;
 import com.jkutkut.chaito.exception.InvalidDataException;
 import com.jkutkut.chaito.model.Msg;
 import com.jkutkut.chaito.rvUtil.MsgAdapter;
@@ -41,7 +42,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
     private EditText etxtWhisperTo;
 
     private ImageButton btnSend;
-    private EditText etxtMsg;
+    private CustomEditText etxtMsg;
     private RecyclerView rvChat;
 
     private Server server;
@@ -58,6 +59,7 @@ public class ChatActivity extends AppCompatActivity implements ClientUI {
         etxtWhisperTo = findViewById(R.id.etxtWhisperTo);
         btnSend = findViewById(R.id.btnSend);
         etxtMsg = findViewById(R.id.etxtMsg);
+        etxtMsg.setClickFeedback(getColor(R.color.teal_700), getColor(R.color.teal_200)); // TODO Change this color
         rvChat = findViewById(R.id.rvChat);
         rvChat.setLayoutManager(new LinearLayoutManager(this));
 
