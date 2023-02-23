@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/msg_margin_small"
             android:inputType="text"
+            android:hint="Username"
             android:autofillHints="username" />
     </RadioGroup>
 
