@@ -10,4 +10,6 @@
     <dimen name="btn_login_padding">12dp</dimen>
     <dimen name="margin_vertical_login">80dp</dimen>
     <dimen name="msg_txt_size">17dp</dimen>
+    <dimen name="welcome_to_text_size">30sp</dimen>
+    <dimen name="logo_margin">30dp</dimen>
 </resources>

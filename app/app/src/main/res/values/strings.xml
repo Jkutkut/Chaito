@@ -11,4 +11,10 @@
     <string name="chat_hint">Message</string>
     <string name="btn_send">Send</string>
     <string name="fap_icon_description">Toggle between dark to light modes.</string>
+    <string name="welcome_to">WELCOME TO</string>
+    <string name="logo_description">logo</string>
+    <string name="username_text">Username</string>
+    <string name="hostname_text">Hostname</string>
+    <string name="port_text">Port</string>
+    <string name="login_text">Login</string>
 </resources>
