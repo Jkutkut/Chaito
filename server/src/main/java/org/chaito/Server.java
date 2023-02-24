@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Server implements ServerAPI {
     private final ArrayList<ClientThread> clients;
@@ -26,7 +25,7 @@ public class Server implements ServerAPI {
             server = new ServerSocket(port);
         } catch (IOException e) {
             System.err.println("Not able to create the server");
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return;
         }
         System.out.println("Server started on " + server.getLocalSocketAddress());
@@ -97,7 +96,7 @@ public class Server implements ServerAPI {
             clientThread.start();
             System.out.println("Client connected: " + clientThread.getUsername());
             System.out.println("Total clients: " + clients.size());
-            for (Msg msg : db.getMsgs(clientThread.getUsername())) {
+            for (Msg msg : db.getMsgs(clientThread.getUsername())) { // Restore session
                 clientThread.send(msg);
             }
 
