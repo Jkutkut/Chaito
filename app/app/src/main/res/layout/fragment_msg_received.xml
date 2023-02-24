@@ -11,8 +11,6 @@
         android:id="@+id/txtvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginLeft="@dimen/msg_padding"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Manolo"
@@ -23,24 +21,30 @@
         android:id="@+id/txtvMsgType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/msg_margin_really_small"
+        android:layout_marginStart="@dimen/msg_margin_really_small"
         android:text="@string/whispers"
         android:textSize="@dimen/msg_txt_size"
         android:textStyle="italic"
         android:fontFamily="@font/quicksand_medium"
         app:layout_constraintTop_toTopOf="@id/txtvUsername"
-        app:layout_constraintStart_toEndOf="@id/txtvUsername"/>
+        app:layout_constraintStart_toEndOf="@id/txtvUsername" />
+
+    <TextView
+        android:layout_width="@dimen/msg_padding"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtvMsgType"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/txtvMsg"
-        android:layout_marginTop="@dimen/msg_margin"
-        android:layout_marginLeft="@dimen/msg_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="fjlaksdj flkajskldf jaskld jflkasjd lfkjadkls jfkla jl"
         android:fontFamily="@font/quicksand"
-        android:textSize="@dimen/msg_txt_size"
+        android:layout_marginEnd="@dimen/msg_padding"
+        android:layout_marginStart="@dimen/msg_padding"
         android:gravity="start"
-        app:layout_constraintTop_toBottomOf="@id/txtvUsername"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:text="fjlaksdj flkajskldf jaskld jflkasjd lfkjadkls jfkla jl"
+        android:textSize="@dimen/msg_txt_size"
+        app:layout_constraintTop_toBottomOf="@id/txtvUsername" />
 </androidx.constraintlayout.widget.ConstraintLayout>

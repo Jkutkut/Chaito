@@ -38,9 +38,8 @@ public class MainActivity extends CustomActivity {
         etxtPort = findViewById(R.id.etxtPort);
         CustomButton btnLogin = findViewById(R.id.btnLogin);
 
-        etxtUsername.setText("Jkutkut");
-        etxtHost.setText("10.34.177.197");
-        etxtHost.setText("192.168.1.170");
+        etxtUsername.setText("Mariadb");
+        etxtHost.setText("10.34.177.");
         etxtPort.setText("3232");
 
         etxtUsername.setClickFeedback(getColor(R.color.etxt_color), getColor(R.color.etxt_hightlight));

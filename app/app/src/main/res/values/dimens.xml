@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="msg_padding">16dp</dimen>
+    <dimen name="msg_padding">10dp</dimen>
     <dimen name="msg_margin">10dp</dimen>
     <dimen name="msg_margin_really_small">3dp</dimen>
     <dimen name="msg_margin_small">5dp</dimen>
