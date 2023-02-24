@@ -6,6 +6,7 @@ public record Msg(String target, String sender, String msg) {
     private static final String COMMUNICATION_SEPARATOR = ",";
 
     public static final String ALL_TARGET = "ALL";
+    public static final String SERVER_SENDER = "Server";
 
     public String encode() {
         Base64.Encoder encoder = Base64.getEncoder();

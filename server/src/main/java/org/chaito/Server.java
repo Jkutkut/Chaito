@@ -99,7 +99,7 @@ public class Server implements ServerAPI {
             for (Msg msg : db.getMsgs(clientThread.getUsername())) { // Restore session
                 clientThread.send(msg);
             }
-
+            send(new Msg(Msg.ALL_TARGET, Msg.SERVER_SENDER, "User " + clientThread.getUsername() + " connected"));
         }
         catch (IOException e) {
             System.err.println("Not able to create the client thread");

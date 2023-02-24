@@ -40,14 +40,13 @@ public class ClientThread extends Thread implements ServerAPI {
             }
         }
         close();
+        server.send(new Msg(Msg.ALL_TARGET, Msg.SERVER_SENDER, username + " disconnected"));
     }
 
     public synchronized void send(Msg msg) {
         try {
             this.output.writeUTF(msg.encode());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException ignored) {}
     }
 
     public synchronized void sendValidConnection(boolean valid) {
